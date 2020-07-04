@@ -47,7 +47,7 @@ export class ApiService {
         take(1),
         map(todos => {
           const foundTodos: Todo[] = todos.filter(todo => {
-            if (todo.description === description) {
+            if (todo.description.toUpperCase().trim() === description.toUpperCase().trim()) {
               if (id < 1 || id !== todo.id) {
                 return todo;
               }

@@ -1,4 +1,4 @@
-<div class="alert alert-success" *ngIf="message">{{ message }}</div>
+<!-- <div class="alert alert-success" *ngIf="message">{{ message }}</div> -->
 
 <table class="table table-bordered">
   <thead>
@@ -6,7 +6,6 @@
       <th>Description</th>
       <th>Target Date</th>
       <th>Completed</th>
-      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -20,8 +19,10 @@
       <td>{{ todo.description }}</td>
       <td>{{ todo.targetDate | date }}</td>
       <td>{{ todo.completed }}</td>
-      <td><button class="btn btn-primary" (click)="btnUpdateTodoClick(todo.id)">Update</button></td>
-      <td><button class="btn btn-danger" (click)="btnDeleteTodoClick(todo.id)">Delete</button></td>
+      <td>
+        <button class="btn btn-primary mr-2" (click)="btnUpdateTodoClick(todo.id)">Update</button>
+        <button class="btn btn-danger" (click)="btnDeleteTodoClick(todo.id)">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>

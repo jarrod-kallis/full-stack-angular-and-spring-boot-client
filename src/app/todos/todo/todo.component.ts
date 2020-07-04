@@ -8,6 +8,7 @@ import { Observable, of, timer } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { Todo } from '../../models/Todo.model';
 import { futureDateValidator } from '../../validators/date.validator';
+import { MessageService } from '../../services/message.service';
 
 
 @Component({
@@ -19,7 +20,13 @@ export class TodoComponent implements OnInit {
   NEW = 'new';
   form: FormGroup;
 
-  constructor(private api: ApiService, private route: ActivatedRoute, private formBuilder: FormBuilder, private router: Router) { }
+  constructor(
+    private api: ApiService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private messageService: MessageService
+  ) { }
 
   ngOnInit() {
     this.route.params
@@ -62,7 +69,10 @@ export class TodoComponent implements OnInit {
     }
 
     save$
-      .subscribe(() => this.navigateBackToTodoList());
+      .subscribe(() => {
+        this.messageService.sendMessage(`Todo successfully ${this.form.value.id === -1 ? 'created' : 'updated'}`);
+        this.navigateBackToTodoList();
+      });
   }
 
   btnClick() {

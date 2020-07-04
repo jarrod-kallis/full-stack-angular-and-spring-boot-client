@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Todo } from '../models/Todo.model';
 import { ApiService } from '../services/api.service';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-todos',
@@ -11,9 +12,8 @@ import { ApiService } from '../services/api.service';
 })
 export class TodosComponent implements OnInit {
   todos: Todo[] = [];
-  message: string = null;
 
-  constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private api: ApiService, private route: ActivatedRoute, private router: Router, private messageService: MessageService) { }
 
   ngOnInit() {
     this.getTodos();
@@ -27,10 +27,8 @@ export class TodosComponent implements OnInit {
   btnDeleteTodoClick(todoId: number) {
     this.api.deleteTodo('Jarrod', todoId)
       .subscribe(() => {
-        this.message = 'Successfully deleted todo';
+        this.messageService.sendMessage('Successfully deleted todo');
         this.getTodos();
-
-        setTimeout(this.removeMessage.bind(this), 3000);
       });
   }
 
@@ -40,9 +38,5 @@ export class TodosComponent implements OnInit {
 
   btnCreateTodoClick() {
     this.router.navigate(['new'], { relativeTo: this.route });
-  }
-
-  removeMessage() {
-    this.message = null;
   }
 }
