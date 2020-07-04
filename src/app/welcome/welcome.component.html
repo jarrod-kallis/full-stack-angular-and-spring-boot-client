@@ -1,0 +1,9 @@
+<div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+Welcome!
+<br />
+Visit your todos <a routerLink="/todos">here</a>
+<div>
+  <p>{{ helloWorldMessage }}</p>
+  <button class="btn btn-primary" (click)="btnHelloWorldClick()">Hello World</button>
+</div>
