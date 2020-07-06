@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Todo } from '../models/Todo.model';
 import { ApiService } from '../services/api.service';
 import { MessageService } from '../services/message.service';
+import { Message } from '../models/Message.model';
 
 @Component({
   selector: 'app-todos',
@@ -27,7 +28,7 @@ export class TodosComponent implements OnInit {
   btnDeleteTodoClick(todoId: number) {
     this.api.deleteTodo('Jarrod', todoId)
       .subscribe(() => {
-        this.messageService.sendMessage('Successfully deleted todo');
+        this.messageService.sendMessage(new Message('Successfully deleted todo'));
         this.getTodos();
       });
   }

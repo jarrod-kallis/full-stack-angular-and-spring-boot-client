@@ -14,7 +14,8 @@ const routes: Routes = [
   { path: 'todos', component: TodosComponent, canActivate: [AuthRouteGuardService] },
   { path: 'todos/new', component: TodoComponent, canActivate: [AuthRouteGuardService] },
   { path: 'todos/:id', component: TodoComponent, canActivate: [AuthRouteGuardService] },
-  { path: 'logout', component: LogoutComponent, canActivate: [AuthRouteGuardService] }
+  { path: 'logout', component: LogoutComponent, canActivate: [AuthRouteGuardService] },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

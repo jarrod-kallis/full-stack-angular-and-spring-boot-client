@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ApiService } from '../services/api.service';
+import { MessageService } from '../services/message.service';
+import { Message, MessageType } from '../models/Message.model';
 
 @Component({
   selector: 'app-welcome',
@@ -9,9 +11,9 @@ import { ApiService } from '../services/api.service';
 })
 export class WelcomeComponent implements OnInit {
   helloWorldMessage: string;
-  errorMessage: string = null;
+  // errorMessage: string = null;
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private messageService: MessageService) { }
 
   ngOnInit() {
   }
@@ -21,9 +23,12 @@ export class WelcomeComponent implements OnInit {
       .subscribe(
         message => {
           this.helloWorldMessage = message;
-          this.errorMessage = null;
+          // this.errorMessage = null;
         },
-        error => this.errorMessage = error.error.message
+        error => {
+          // this.errorMessage = error.error.message ? error.error.message : error.statusText;
+          this.messageService.sendMessage(new Message(error.error.message ? error.error.message : error.statusText, MessageType.Error));
+        }
       );
   }
 }

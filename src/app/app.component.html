@@ -1,7 +1,9 @@
 <app-menu></app-menu>
 
 <div class="container mt-2 router-content">
-  <div class="alert alert-success" *ngIf="(messageService.message$ | async) as message">{{ message }}</div>
+  <div [class]="'alert alert-'+message.messageTypeString" *ngIf="(messageService.message$ | async) as message">
+    {{ message.message }}
+  </div>
 
   <router-outlet></router-outlet>
 </div>

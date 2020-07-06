@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
+import { MessageService } from '../services/message.service';
+import { Message, MessageType } from '../models/Message.model';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +13,10 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  validCredentials: boolean;
+  // message: string;
   loginAttempted = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -24,16 +25,18 @@ export class LoginComponent implements OnInit {
     });
 
     this.authService.authenticated$.subscribe(authenticated => {
-      this.validCredentials = authenticated;
-
-      if (this.validCredentials === true) {
+      if (authenticated === true) {
         this.router.navigateByUrl('welcome');
+      } else if (this.loginAttempted === true) {
+        // this.message = 'Invalid Credentials';
+        this.messageService.sendMessage(new Message('Invalid Credentials', MessageType.Warning));
       }
     });
   }
 
   submit() {
-    this.authService.login(this.form.value.username, this.form.value.password);
     this.loginAttempted = true;
+    // this.message = null;
+    this.authService.login(this.form.value.username, this.form.value.password);
   }
 }

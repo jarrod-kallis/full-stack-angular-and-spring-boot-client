@@ -9,6 +9,7 @@ import { ApiService } from '../../services/api.service';
 import { Todo } from '../../models/Todo.model';
 import { futureDateValidator } from '../../validators/date.validator';
 import { MessageService } from '../../services/message.service';
+import { Message } from '../../models/Message.model';
 
 
 @Component({
@@ -70,7 +71,7 @@ export class TodoComponent implements OnInit {
 
     save$
       .subscribe(() => {
-        this.messageService.sendMessage(`Todo successfully ${this.form.value.id === -1 ? 'created' : 'updated'}`);
+        this.messageService.sendMessage(new Message(`Todo successfully ${this.form.value.id === -1 ? 'created' : 'updated'}`));
         this.navigateBackToTodoList();
       });
   }
