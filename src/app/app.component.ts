@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 
-import { AuthService } from './services/auth.service';
 import { MessageService } from './services/message.service';
 
 @Component({
@@ -9,14 +7,6 @@ import { MessageService } from './services/message.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  // message$: Observable<string> = null;
-
-  constructor(private authService: AuthService, protected messageService: MessageService) { }
-
-  ngOnInit(): void {
-    this.authService.autoLogin();
-
-    // this.message$ = this.messageService.message$;
-  }
+export class AppComponent {
+  constructor(protected messageService: MessageService) { }
 }

@@ -13,8 +13,6 @@ import { Message, MessageType } from '../models/Message.model';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  // message: string;
-  loginAttempted = false;
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private messageService: MessageService) { }
 
@@ -24,19 +22,20 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]]
     });
 
-    this.authService.authenticated$.subscribe(authenticated => {
-      if (authenticated === true) {
-        this.router.navigateByUrl('welcome');
-      } else if (this.loginAttempted === true) {
-        // this.message = 'Invalid Credentials';
-        this.messageService.sendMessage(new Message('Invalid Credentials', MessageType.Warning));
-      }
-    });
+    if (this.authService.isAuthenticated()) {
+      this.gotoWelcomePage();
+    }
   }
 
   submit() {
-    this.loginAttempted = true;
-    // this.message = null;
-    this.authService.login(this.form.value.username, this.form.value.password);
+    this.authService.login(this.form.value.username, this.form.value.password)
+      .subscribe(
+        () => this.gotoWelcomePage(),
+        () => this.messageService.sendMessage(new Message('Invalid Credentials', MessageType.Warning))
+      );
+  }
+
+  gotoWelcomePage() {
+    this.router.navigateByUrl('welcome');
   }
 }

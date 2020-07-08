@@ -1,3 +1,8 @@
 export class Authentication {
-  constructor(public authenticated: boolean, public username: string = '', public password: string = '') { }
+  constructor(
+    public authenticated: boolean = false,
+    public username: string = '',
+    public password: string = '',
+    public token: string = ''
+  ) { }
 }
